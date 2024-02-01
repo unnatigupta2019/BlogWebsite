@@ -22,5 +22,22 @@ const loginUser = async (req, res) => {
     res.status(400).json({ error: "User doesn't exist" });
   }
 };
+const deleteUser = async (req, res) => {
+  const deleteUser1 = await User.findByIdAndDelete(req.params.id);
+  if (!req.params.id) {
+    return res.status(400).json({ error: "Wrong User" });
+  }
+  res.send(deleteUser1);
+};
+const updateUser = async (req, res) => {
+  const updateUser1 = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
+  if (!req.params.id) {
+    return res.status(400).json({ error: "Wrong User" });
+  }
+  res.send(updateUser1);
+  await updateUser1.save();
+};
 
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, deleteUser, updateUser };
