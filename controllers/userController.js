@@ -1,12 +1,12 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const secretkey = "poiuytrewq";
+
 const registerUser = async (req, res) => {
-  //console.log(req.body);
   const user = new User(req.body);
 
-  const savedUser = await user.save();
-  //res.send({ user: savedUser._id });
-  //console.log(user);
+  await user.save();
   res.status(201).json({ msg: "User registered" });
 };
 const loginUser = async (req, res) => {
@@ -14,7 +14,10 @@ const loginUser = async (req, res) => {
   if (user) {
     const result = await bcrypt.compare(req.body.password, user.password);
     if (result) {
-      res.status(201).json({ msg: "User Logged In" });
+      const token = jwt.sign({ userId: user._id }, secretkey, {
+        expiresIn: "1h",
+      });
+      res.status(200).send({ msg: "Logged In", token });
     } else {
       res.status(400).json({ error: "password doesn't match" });
     }
@@ -23,21 +26,21 @@ const loginUser = async (req, res) => {
   }
 };
 const deleteUser = async (req, res) => {
-  const deleteUser1 = await User.findByIdAndDelete(req.params.id);
+  const deleteUser = await User.findByIdAndDelete(req.params.id);
   if (!req.params.id) {
     return res.status(400).json({ error: "Wrong User" });
   }
-  res.send(deleteUser1);
+  res.send(deleteUser);
 };
 const updateUser = async (req, res) => {
-  const updateUser1 = await User.findByIdAndUpdate(req.params.id, req.body, {
+  const updateUser = await User.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
   if (!req.params.id) {
     return res.status(400).json({ error: "Wrong User" });
   }
-  res.send(updateUser1);
-  await updateUser1.save();
+  res.send(updateUser);
+  await updateUser.save();
 };
 
 module.exports = { registerUser, loginUser, deleteUser, updateUser };

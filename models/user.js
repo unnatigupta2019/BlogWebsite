@@ -18,6 +18,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  //   article: [
+  //     {
+  //       type: mongoose.Schema.Types.ObjectId,
+  //       ref: "blog",
+  //     },
+  //   ],
 });
 
 //Hashing
@@ -27,6 +33,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

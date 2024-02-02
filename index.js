@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes.js");
 const blogRoutes = require("./routes/blogRoutes.js");
+const authenticateToken = require("./middleware/authorization.js");
 app.use(express.json());
 mongoose
   .connect(
@@ -12,7 +13,7 @@ mongoose
   .catch((err) => console.log("Error"));
 
 app.use("/api/user", userRoutes);
-app.use("/api/blog", blogRoutes);
+app.use("/api/blog", authenticateToken, blogRoutes);
 
 app.listen(5000, () => {
   console.log("Running");
