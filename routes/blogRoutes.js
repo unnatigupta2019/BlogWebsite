@@ -7,8 +7,7 @@ const {
   getOneBlog,
   getAllBlogs,
 } = require("../controllers/blogController");
-const authenticateToken = require("../middleware/authorization");
-const { loginUser } = require("../controllers/userController");
+
 router.route("/postBlog").post(postBlog);
 router.route("/updateBlog/:id").put(updateBlog);
 router.route("/deleteBlog/:id").delete(deleteBlog);
