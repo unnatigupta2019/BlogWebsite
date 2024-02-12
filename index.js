@@ -20,4 +20,4 @@ app.listen(5000, () => {
   console.log("Running");
 });
 
-module.exports.handler = serverless(app);
+//module.exports.handler = serverless(app);
