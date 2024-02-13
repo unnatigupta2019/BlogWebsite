@@ -12,7 +12,9 @@ mongoose
   )
   .then(() => console.log("Mongo Connected"))
   .catch((err) => console.log("Error"));
-
+app.get("/", (req, res) => {
+  res.send("<h1>Blog Website running</h1>");
+});
 app.use("/api/user", userRoutes);
 app.use("/api/blog", authenticateToken, blogRoutes);
 
