@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const userRoutes = require("./routes/userRoutes.js");
 const blogRoutes = require("./routes/blogRoutes.js");
 const authenticateToken = require("./middleware/authorization.js");
-const serverless = require("serverless-http");
+
 app.use(express.json());
 mongoose
   .connect(
